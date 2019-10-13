@@ -8,37 +8,29 @@ import {ResetButton} from "./layout/resetButton";
 
 
 export const Tile = (props) => {
+    const imageSizeInTile = 138;
     const imgEl = useRef(null);
-    const [img, setImg] = useState({
-        src: '',
-        style: {display: 'none'},
-        isLoading: false
-    });
-    useEffect(() => {
-            if (img.src) {
-                getStyles(imgEl.current, 138).then((style) => {
-                    setImg((prev) => {
-                        return {...prev, ...{style: style, isLoading: false}}
-                    });
-                });
-            } else {
-                setImg((prev) => {
-                    return {...prev, ...{style: {display: 'none'}}}
-                });
-            }
-        }
-        , [img.src]);
+    const [imgSrc, setImgSrc] = useState('');
+    const [imgStyle, setImgStyle] = useState({display: 'none'});
+    const [isLoading, setIsLoading] = useState('');
     const setPhoto = (photo) => {
-        setImg((prev) => {
-            return {...prev, ...{src: photo, isLoading: true}}
-        });
+        setImgSrc(photo);
+        setIsLoading(true);
+        if (photo) {
+            getStyles(imgEl.current, imageSizeInTile).then((style) => {
+                setImgStyle(style);
+                setIsLoading(false);
+            });
+        } else {
+            setImgStyle({display: 'none'})
+        }
     };
     return (
         <div className="tile-holder">
-            <TileLayout image={<img alt="upload" ref={imgEl} className="image" style={img.style} src={img.src}/>}>
-                {(!img.src) ? (<UploadPhoto setPhoto={setPhoto}/>) : (<div>{img.isLoading && <LoadingSpinner/>}</div>)}
+            <TileLayout image={<img alt="" ref={imgEl} className="image" style={imgStyle} src={imgSrc}/>}>
+                {(!imgSrc) ? (<UploadPhoto setPhoto={setPhoto}/>) : (<div>{isLoading && <LoadingSpinner/>}</div>)}
             </TileLayout>
-            <ResetButton isActive={!Boolean(img.src)} onReset={() => setPhoto('')}/>
+            <ResetButton isActive={!Boolean(imgSrc)} onReset={() => setPhoto('')}/>
         </div>
     )
 };

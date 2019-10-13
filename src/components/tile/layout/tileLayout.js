@@ -12,7 +12,7 @@ export const TileLayout = ({image, ...rest}) => {
                 </div>
             </div>
             <div className="frame-holder">
-                <img alt="your upload" src={frame}/>
+                    <img alt="" src={frame}/>
             </div>
 
 
