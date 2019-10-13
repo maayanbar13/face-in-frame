@@ -5,6 +5,7 @@ import './tile.css';
 import {getStyles} from "./locator/locator";
 import {LoadingSpinner} from "./layout/loadingSpinner";
 import {ResetButton} from "./layout/resetButton";
+import {OnTileContentLayout} from "./layout/onTileContentLayout";
 
 
 export const Tile = (props) => {
@@ -27,8 +28,11 @@ export const Tile = (props) => {
     };
     return (
         <div className="tile-holder">
-            <TileLayout image={<img alt="" ref={imgEl} className="image" style={imgStyle} src={imgSrc}/>}>
-                {(!imgSrc) ? (<UploadPhoto setPhoto={setPhoto}/>) : (<div>{isLoading && <LoadingSpinner/>}</div>)}
+            <TileLayout>
+                {<img alt="" ref={imgEl} className="image" style={imgStyle} src={imgSrc}/>}
+                <OnTileContentLayout>
+                    {(!imgSrc) ? (<UploadPhoto setPhoto={setPhoto}/>) : (isLoading && (<LoadingSpinner/>))}
+                </OnTileContentLayout>
             </TileLayout>
             <ResetButton isActive={!Boolean(imgSrc)} onReset={() => setPhoto('')}/>
         </div>

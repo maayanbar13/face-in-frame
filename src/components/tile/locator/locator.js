@@ -35,7 +35,7 @@ const getFacesRectangle = (facesDetections) => {
     return {top, left, bottom, right};  // the return values are also relative (numbers between 0-1).
 };
 const getImageSizeByFaces = (facesBox, tileSize, originalImageSize) => {
-    const relativeFaceSizeInTile = 0.75;
+    const relativeFaceSizeInTile = 0.7;
     const facesWidth = (facesBox.right - facesBox.left) * originalImageSize.width;
     const facesHeight = (facesBox.bottom - facesBox.top) * originalImageSize.height;
     const FaceToTileRatio = tileSize / Math.max(facesWidth, facesHeight);
