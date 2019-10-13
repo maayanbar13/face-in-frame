@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {TileLayout} from "./layout/tileLayout";
 import {UploadPhoto} from "./upload/upload";
 import './tile.css';
