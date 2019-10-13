@@ -3,5 +3,6 @@ import {detectAllFaces, loadFaceLandmarkModel, loadFaceRecognitionModel, loadSsd
 export const GetDetections = async (img) => {
     const MODEL_URL = '/models';
     await loadSsdMobilenetv1Model(MODEL_URL);
+    await loadFaceRecognitionModel(MODEL_URL);
     return await detectAllFaces(img);
 };

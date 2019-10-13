@@ -36,10 +36,12 @@ const getImageSizeByFaces = (facesBox, tileSize, originalImageSize) => {
     const facesWidth = (facesBox.right - facesBox.left) * originalImageSize.width;
     const facesHeight = (facesBox.bottom - facesBox.top) * originalImageSize.height;
     const ratio = tileSize / Math.max(facesWidth, facesHeight);
-    return {
+    let aspire = {
         width: originalImageSize.width * ratio * paddingFaceFromBorder,
         height: originalImageSize.height * ratio * paddingFaceFromBorder
     };
+    return (aspire.width > tileSize && aspire.height > tileSize) ? aspire : getImageSizeWithoutFaces(aspire, tileSize);
+
 };
 const getImageSizeWithoutFaces = (img, tileSize) => {
     return img.width < img.height ? ({
@@ -52,8 +54,8 @@ const getMarginsByFaces = (facesBox, newImageSize, tileSize) => {
     const facesHeight = (facesBox.bottom - facesBox.top) * newImageSize.height;
     const faceMarginTop = (tileSize - facesHeight) / 2;
     const faceMarginLeft = (tileSize - facesWidth) / 2;
-    const marginTop = Math.min((faceMarginTop - (facesBox.top * newImageSize.height)), 0);
-    const marginLeft = Math.min((faceMarginLeft - (facesBox.left * newImageSize.width)), 0);
+    const marginTop = newImageSize.height>tileSize ? Math.min((faceMarginTop - (facesBox.top * newImageSize.height)), 0):0;
+    const marginLeft = newImageSize.width>tileSize ? Math.min((faceMarginLeft - (facesBox.left * newImageSize.width)), 0):0;
     return formatValuesToStyle({marginTop, marginLeft});
 };
 const getMarginsWithoutFace = (newImageSize, tileSize) => {
